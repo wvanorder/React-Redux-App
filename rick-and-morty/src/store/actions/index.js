@@ -15,5 +15,6 @@ export const fetchCharacters = (source = 'https://rickandmortyapi.com/api/charac
         })
         .catch(err => {
             console.log('Error: ', err)
+            dispatch({ type: FETCH_CHARACTERS_FAILURE, payload: err})
         })
 };

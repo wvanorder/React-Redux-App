@@ -31,6 +31,12 @@ const App = props => {
         <Loader type="Grid" color="tomato" height={80} width={80} />
       </div>
     )
+  } else if(props.error) {
+    return(
+      <div className="App">
+        <h1>{props.error}</h1>
+      </div>
+    )
   }
 
   return (

@@ -33,7 +33,12 @@ export const reducer = (state = initialState, action) => {
                 nextPage: action.payload.info.next,
                 prevPage: action.payload.info.prev
             }
-       
+       case FETCH_CHARACTERS_FAILURE:
+            return{
+                ...state,
+                isLoading: false,
+                error: `Something has gone horribly wrong! Refresh the page to try again.`
+            }
         
         default:
             return state;
