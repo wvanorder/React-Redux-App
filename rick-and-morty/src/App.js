@@ -1,12 +1,25 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Loader from 'react-loader-spinner';
+import { Button } from 'antd';
+import styled from 'styled-components';
 
 import './App.css';
+import 'antd/dist/antd.css';
+
+
 
 import { fetchCharacters } from './store/actions';
 
 import CharacterList from './components/CharacterList';
+
+const ButtonHolder = styled.div`
+  width: 300px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+`
 
 
 const App = props => {
@@ -22,15 +35,26 @@ const App = props => {
 
   return (
     <div className="App">
+      <h1>1000 years of Rick and Morty!</h1>
+      <ButtonHolder>
+        {(!props.characters && !props.isLoading) ? <Button onClick={() => props.fetchCharacters()}>Show Me What You Got</Button> :
+          <>
+         {props.prevPage && <Button onClick={() => props.fetchCharacters(props.prevPage)}>Previous Page </Button>}
+         {props.nextPage && <Button onClick={() => props.fetchCharacters(props.nextPage)}> Next Page</Button>}
+         </>}
+      </ButtonHolder>
+
       {props.characters && <CharacterList characters ={props.characters} />}
 
-      <div classNAme="buttons">
-        {(!props.characters && !props.isLoading) ? <button onClick={() => props.fetchCharacters()}>Fetch stuff</button> :
+      {(props.nextPage || props.prevPage) && <ButtonHolder>
+        {(!props.characters && !props.isLoading) ? <Button onClick={() => props.fetchCharacters()}>Fetch stuff</Button> :
           <>
-         <button onClick={() => props.fetchCharacters(props.prevPage)}>Previous Page </button>
-         <button onClick={() => props.fetchCharacters(props.nextPage)}> Next Page</button>
+         {props.prevPage && <Button onClick={() => props.fetchCharacters(props.prevPage)}>Previous Page </Button>}
+         {props.nextPage && <Button onClick={() => props.fetchCharacters(props.nextPage)}> Next Page</Button>}
          </>}
-      </div>
+      </ButtonHolder>}
+
+      
     </div>
   );
 }
